@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AbsoluteLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:ignore="Deprecated">
+    //TODO
+
+
+    <!-- TODO: Update blank fragment layout -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="@string/hello_blank_fragment" />
+
+    <ImageView
+        android:id="@+id/product_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_x="22dp"
+        android:layout_y="66dp"
+        tools:src="@tools:sample/avatars" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_x="201dp"
+        android:layout_y="90dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="199dp"
+            android:layout_height="wrap_content"
+            android:hint="name"
+            android:id="@+id/name"
+
+            />
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+
+
+    <Spinner
+        android:id="@+id/classify"
+        android:layout_width="115dp"
+        android:layout_height="36dp"
+        android:layout_x="194dp"
+        android:layout_y="466dp" />
+
+    <Spinner
+        android:id="@+id/category"
+        android:layout_width="137dp"
+        android:layout_height="38dp"
+        android:layout_x="26dp"
+        android:layout_y="541dp" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/description"
+        android:layout_width="354dp"
+        android:layout_height="173dp"
+        android:layout_x="20dp"
+        android:layout_y="252dp"
+        android:hint="description" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_x="208dp"
+        android:layout_y="183dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/price"
+            android:layout_width="211dp"
+            android:layout_height="60dp"
+            android:hint="price" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="139dp"
+        android:layout_height="wrap_content"
+        android:layout_x="31dp"
+        android:layout_y="463dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/stock"
+            android:layout_width="135dp"
+            android:layout_height="61dp"
+            android:hint="stock" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+</AbsoluteLayout>
