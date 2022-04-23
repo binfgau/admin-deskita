@@ -1,6 +1,5 @@
 package com.example.admin_deskita
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
 import android.os.StrictMode
@@ -12,11 +11,11 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.ListView
-import android.widget.Toast
 import androidx.navigation.fragment.findNavController
+import com.example.admin_deskita.adapter.CustomersAdapter
+import com.example.admin_deskita.adapter.OrderItemsAdapter
+import com.example.admin_deskita.entity.Customer
 import com.example.admin_deskita.request.DeskitaService
-import okhttp3.OkHttpClient
-import okhttp3.Request
 import org.json.JSONArray
 import org.json.JSONObject
 
@@ -27,14 +26,14 @@ private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
- * Use the [OrderFragment.newInstance] factory method to
+ * Use the [CustomerFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class OrderFragment : Fragment() {
+class CustomerFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-    val client = DeskitaService()
+    private val client =DeskitaService()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -43,64 +42,54 @@ class OrderFragment : Fragment() {
         }
     }
 
-    @SuppressLint("ResourceType")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-
-
-
-        return inflater.inflate(R.layout.fragment_order, container, false)
+        return inflater.inflate(R.layout.fragment_customer, container, false)
     }
-
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val policy = StrictMode.ThreadPolicy.Builder().permitAll().build()
         StrictMode.setThreadPolicy(policy)
-        try{
-            var orders: JSONArray?=client.getOrders();
 
-            val array: ArrayList<String> = ArrayList()
-            var ordersId:ArrayList<String> = ArrayList()
-            if (orders != null) {
-                for(i in 0 until orders.length()){
-                    val order =orders.getJSONObject(i)
+        //set list customer
+    try {
+        var res: JSONObject =client.getUsers("user");
+        var users=res.getJSONArray("user");
+        val array:ArrayList<Customer> = ArrayList()
+        for(i in 0 until users.length()){
+            val customer=users.getJSONObject(i)
+            val customerModel=Customer(customer.getString("_id"),customer.getJSONObject("avatar").getString("url"),
+                customer.getString("name"),customer.getString("emailUser"),customer.getString("phoneNumber")
+            )
+            array.add(customerModel)
+        }
+        val lvCustomers=view.findViewById(R.id.customers) as ListView
+        val adapter= context?.let { CustomersAdapter(it,R.layout.list_customer,array) }
+        lvCustomers.adapter=adapter
 
-                    array.add( "Mã đơn hàng: "+order.getString("_id")+"\n"+
-                            "Trạng thái: "+order.getString("orderStatus")+"\n"+
-                            "Phương thức thanh toán: "+order.getString("paymentMethod")+"\n"+
-                            "Ngày tạo: "+order.getString("createAt"))
-                    ordersId.add(order.getString("_id"))
-                }
+        lvCustomers.onItemClickListener = object : AdapterView.OnItemClickListener {
+
+            override fun onItemClick(parent: AdapterView<*>, view: View,
+                                     position: Int, id: Long) {
+
+                // value of item that is clicked
+                val preferences= activity?.getSharedPreferences("admin_deskita", Context.MODE_PRIVATE)
+                val id=array.get(position).id
+                preferences?.edit()?.putString("customer_id",id)?.apply()
+
+                findNavController().navigate(R.id.to_customer_detail_fragment)
             }
-            val adapter = context?.let {
-                ArrayAdapter(
-                    it,
-                    R.layout.list_order, array)
-            }
-            val listView:ListView= view.findViewById(R.id.orders)
-            listView.adapter=adapter;
-
-
-            listView.onItemClickListener = object : AdapterView.OnItemClickListener {
-
-                override fun onItemClick(parent: AdapterView<*>, view: View,
-                                         position: Int, id: Long) {
-
-                    // value of item that is clicked
-                    val preferences= activity?.getSharedPreferences("admin_deskita", Context.MODE_PRIVATE)
-                    preferences?.edit()?.putString("order_id",ordersId.get(position))?.apply()
-                    findNavController().navigate(R.id.to_order_detail_fragment)
-                }
-            }
-                }catch (e:Exception){
-            Log.d("msg",e.stackTraceToString())
         }
 
+    }catch (e:Exception){
+        Log.d("error",e.printStackTrace().toString())
     }
+    }
+
+
     companion object {
         /**
          * Use this factory method to create a new instance of
@@ -108,12 +97,12 @@ class OrderFragment : Fragment() {
          *
          * @param param1 Parameter 1.
          * @param param2 Parameter 2.
-         * @return A new instance of fragment OrderFragment.
+         * @return A new instance of fragment CustomerFragment.
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            OrderFragment().apply {
+            CustomerFragment().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)

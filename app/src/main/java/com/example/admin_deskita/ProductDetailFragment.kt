@@ -1,11 +1,19 @@
 package com.example.admin_deskita
 
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
+import android.util.Base64
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.MimeTypeMap
 import android.widget.ArrayAdapter
 import android.widget.Spinner
 import androidx.fragment.app.Fragment
@@ -13,6 +21,8 @@ import com.example.admin_deskita.databinding.FragmentProductDetailBinding
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import org.json.JSONObject
+import java.io.ByteArrayOutputStream
+import java.io.InputStream
 import java.net.URL
 
 
@@ -33,6 +43,7 @@ class ProductDetailFragment : Fragment() {
     private var _binding: FragmentProductDetailBinding? = null
     private val binding get() = _binding!!
     val client = OkHttpClient()
+    lateinit var imageUri:Uri
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -54,10 +65,6 @@ class ProductDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-
-
-
         //classiify
         val classifies = arrayOf("Women", "Men", "Kid");
         var adapter= context?.let { ArrayAdapter<Any?>(it,
@@ -96,11 +103,11 @@ class ProductDetailFragment : Fragment() {
             setSpinText(binding.category,res?.getJSONObject("product").getString("category"))
 
 
-//            val url= URL(res?.getJSONObject("product")?.getJSONArray("images")?.
-//                getJSONObject(0)?.getString("url"))
-//            val bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream())
-//
-//            binding.productImage.setImageBitmap(bmp)
+            val url= URL(res?.getJSONObject("product")?.getJSONArray("images")?.
+                getJSONObject(0)?.getString("url"))
+            val bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream())
+
+            binding.productImage.setImageBitmap(bmp)
         }
         //new product
         else{
@@ -110,7 +117,55 @@ class ProductDetailFragment : Fragment() {
             binding.productImage.setImageBitmap(bmp)
         }
 
+        //select image
+        binding.selectImage.setOnClickListener{
+            selectImage()
+        }
+
+        //save
+        binding.save.setOnClickListener{
+            save()
+        }
+
     }
+
+    fun save(){
+
+            val inputStream: InputStream? =context?.contentResolver?.openInputStream(imageUri)
+
+        val selectedImage = BitmapFactory.decodeStream(inputStream)
+        val encodedImage="data:"+context?.contentResolver?.getType(imageUri)+";base64,"+BitMapToString(selectedImage)
+
+    }
+
+    fun BitMapToString(bitmap: Bitmap): String? {
+        val baos = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 70, baos)
+        val b = baos.toByteArray()
+        return Base64.encodeToString(b, Base64.DEFAULT)
+    }
+
+    fun selectImage(){
+        val intent= Intent(Intent.ACTION_PICK,MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+
+        startActivityForResult(intent,100)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if(requestCode==100&&resultCode== Activity.RESULT_OK){
+
+            try {
+                imageUri = data!!.data!!
+                binding.productImage.setImageURI(imageUri)
+
+            }catch (e:Exception){
+                Log.d("error_error",e.stackTraceToString())
+            }
+
+        }
+    }
+
     fun setSpinText(spin: Spinner, text: String?) {
         for (i in 0 until spin.adapter.count) {
             if (spin.adapter.getItem(i).toString().contains(text!!)) {

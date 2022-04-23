@@ -3,16 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".OrderFragment">
+    tools:context=".CustomerFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <ListView
-        android:id="@+id/orders"
+        android:id="@+id/customers"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
-
 </FrameLayout>

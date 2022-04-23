@@ -59,6 +59,9 @@ class SecondFragment : Fragment() {
                 if (position==1){
                     findNavController().navigate(R.id.action_SecondFragment_to_OrderFragment)
                 }
+                if (position==2){
+                    findNavController().navigate(R.id.action_SecondFragment_to_CustomerFragment)
+                }
             }
         binding.buttonSecond.setOnClickListener {
             findNavController().navigate(R.id.action_SecondFragment_to_FirstFragment)

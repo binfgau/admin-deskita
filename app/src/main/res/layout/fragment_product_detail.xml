@@ -9,10 +9,14 @@
 
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+
+    <Button
+        android:id="@+id/select_image"
+        android:layout_width="133dp"
+        android:layout_height="wrap_content"
+        android:layout_x="20dp"
+        android:layout_y="203dp"
+        android:text="Select image" />
 
     <ImageView
         android:id="@+id/product_image"
@@ -70,7 +74,7 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/price"
-            android:layout_width="211dp"
+            android:layout_width="193dp"
             android:layout_height="60dp"
             android:hint="price" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -87,5 +91,13 @@
             android:layout_height="61dp"
             android:hint="stock" />
     </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:id="@+id/save"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_x="215dp"
+        android:layout_y="534dp"
+        android:text="Save" />
 
 </AbsoluteLayout>
