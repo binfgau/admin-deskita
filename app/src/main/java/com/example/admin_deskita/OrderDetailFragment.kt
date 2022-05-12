@@ -64,9 +64,11 @@ class OrderDetailFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         //get order
         val prefs=activity?.getSharedPreferences("admin_deskita", Context.MODE_PRIVATE)
+        val token = prefs?.getString("TOKEN",null)!!
         try {
             val orderId =    prefs?.getString("order_id",null)
-            order= orderId?.let { client.getOrderById(it) }
+
+            order= orderId?.let { client.getOrderById(it,token) }
             customer= order?.getJSONObject("user");
             shippingInfo= order?.getJSONObject("order")?.getJSONObject("shippingInfo")
             orderItems=order?.getJSONObject("order")?.getJSONArray("orderItems")
@@ -161,11 +163,11 @@ class OrderDetailFragment : Fragment() {
         val btnUpdateStatus=view.findViewById(R.id.btn_update_status) as Button
         btnUpdateStatus.setOnClickListener{
             when(btnUpdateStatus.text){
-                "Confirmed"->{client.updateStatusOrder( ""+prefs?.getString("order_id",null),"Confirmed")
+                "Confirmed"->{client.updateStatusOrder( ""+prefs?.getString("order_id",null),"Confirmed",token)
                     btnUpdateStatus.text="Delivered"
                     orderStatus.text="Trạng thái đơn hàng: Confirmed"
                 }
-                "Delivered"->{client.updateStatusOrder(""+prefs?.getString("order_id",null),"Delivered")
+                "Delivered"->{client.updateStatusOrder(""+prefs?.getString("order_id",null),"Delivered",token)
                     btnUpdateStatus.visibility=+View.GONE
                     orderStatus.text="Trạng thái đơn hàng: Delivered"
                 }

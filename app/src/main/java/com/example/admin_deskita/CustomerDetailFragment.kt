@@ -54,7 +54,9 @@ class CustomerDetailFragment : Fragment() {
         StrictMode.setThreadPolicy(policy)
         val prefs=activity?.getSharedPreferences("admin_deskita", Context.MODE_PRIVATE)
         val customerId =    prefs?.getString("customer_id",null)
-        customer= customerId?.let { client.getUserById(it) }!!
+
+        val token = prefs?.getString("TOKEN",null)!!
+        customer= customerId?.let { client.getUserById(it,token) }!!
         customer=customer.getJSONObject("user")
         //set image
         val imageUrl = URL(customer.getJSONObject("avatar").getString("url"))
@@ -92,7 +94,7 @@ class CustomerDetailFragment : Fragment() {
         val btnUpdateRole=view.findViewById(R.id.btn_change_role) as Button
         btnUpdateRole.setOnClickListener{
             try {
-                client.updateRole(customerId)
+                client.updateRole(customerId,token)
 
             }catch (e:Exception){
                 Log.d("errorr",e.printStackTrace().toString())

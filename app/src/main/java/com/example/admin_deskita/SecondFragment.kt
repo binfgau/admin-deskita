@@ -1,5 +1,6 @@
 package com.example.admin_deskita
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -38,7 +39,6 @@ class SecondFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
 
-
         val users = arrayOf(
             "Products", "Orders", "Customer",
             "Profile", "Discount","Analytics"
@@ -61,6 +61,9 @@ class SecondFragment : Fragment() {
                 }
                 if (position==2){
                     findNavController().navigate(R.id.action_SecondFragment_to_CustomerFragment)
+                }
+                if (position==5){
+                    findNavController().navigate(R.id.action_SecondFragment_to_AnalyticFragment)
                 }
             }
         binding.buttonSecond.setOnClickListener {

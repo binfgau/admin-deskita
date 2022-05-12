@@ -1,14 +1,19 @@
 package com.example.admin_deskita.request
 
+import android.content.Context
+import android.os.Bundle
+import android.view.View
+import androidx.fragment.app.Fragment
 import okhttp3.*
 import org.json.JSONArray
 import org.json.JSONObject
+import java.util.*
 
 
-class DeskitaService {
+class DeskitaService : Fragment() {
     val client = OkHttpClient()
-    val token="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMTdiNTYwNjA1YzAzMjg0YzRlZTc0NiIsImlhdCI6MTY1MDYxNDYxMywiZXhwIjoxNjUxMjE5NDEzfQ.nGFBO-zqOf7rEUt4hkuSdlEGTjurVBYNuEMwVQpv7FI";
     val url="https://deskita-ecommerce.herokuapp.com/api/v1"
+
 
     fun getOrders(): JSONArray {
         val request = Request.Builder()
@@ -24,7 +29,8 @@ class DeskitaService {
 
     }
 
-    fun getOrderById(id:String):JSONObject{
+    fun getOrderById(id:String,token:String):JSONObject{
+
         val request=Request.Builder()
             .header("User-Agent", "OkHttp Headers.java")
             .addHeader("Accept", "application/json")
@@ -36,7 +42,8 @@ class DeskitaService {
         return JSONObject(jsonData)
     }
 
-    fun updateStatusOrder(id:String,orderStatus:String):JSONObject{
+    fun updateStatusOrder(id:String,orderStatus:String,token: String):JSONObject{
+
         val formBody: RequestBody = FormBody.Builder()
             .add("orderStatus", orderStatus)
             .build()
@@ -51,7 +58,8 @@ class DeskitaService {
         return JSONObject(jsonData)
     }
 
-    fun getUsers(type:String):JSONObject{
+    fun getUsers(type:String,token: String):JSONObject{
+
         val request=Request.Builder()
             .header("User-Agent", "OkHttp Headers.java")
             .addHeader("Accept", "application/json")
@@ -63,7 +71,8 @@ class DeskitaService {
         return JSONObject(jsonData)
     }
 
-    fun getUserById(id:String):JSONObject{
+    fun getUserById(id:String,token: String):JSONObject{
+
         val request=Request.Builder()
             .header("User-Agent", "OkHttp Headers.java")
             .addHeader("Accept", "application/json")
@@ -75,16 +84,9 @@ class DeskitaService {
         return JSONObject(jsonData)
     }
 
-    fun updateRole(id:String):JSONObject{
-        val json = """
-"data":{
-    "role":"admin"
-   
-}
-""".trimIndent()
+    fun updateRole(id:String,token: String):JSONObject{
 
-
-        val formBody: RequestBody = FormBody.Builder()
+             val formBody: RequestBody = FormBody.Builder()
             .add("role","admin")
             .build()
         val request=Request.Builder()
@@ -92,6 +94,46 @@ class DeskitaService {
             .addHeader("Accept", "application/json")
             .method("PUT",formBody)
             .url(url+"/admin/user/${id}?userToken=${token}")
+            .build()
+        val response = client.newCall(request).execute()
+        val jsonData = response.body()?.string();
+        return JSONObject(jsonData)
+    }
+
+    fun getAnalyticsByDate(type: String?, dateStart:String, dateEnd:String,token: String):JSONObject{
+
+        val request=Request.Builder()
+            .header("User-Agent", "OkHttp Headers.java")
+            .addHeader("Accept", "application/json")
+            .method("GET",null)
+            .url(url+"/analytics-by-date?type=${type}&dateStart=${dateStart}&dateEnd=${dateEnd}&userToken=${token}")
+            .build()
+        val response = client.newCall(request).execute()
+        val jsonData = response.body()?.string();
+        return JSONObject(jsonData)
+    }
+
+    fun sendEmail(email: String?):JSONObject{
+        val formBody: RequestBody = FormBody.Builder()
+            .add("email", email)
+            .build()
+        val request=Request.Builder()
+            .header("User-Agent", "OkHttp Headers.java")
+            .addHeader("Accept", "application/json")
+            .method("POST",formBody)
+            .url(url+"/user/password/forgot")
+            .build()
+        val response = client.newCall(request).execute()
+        val jsonData = response.body()?.string();
+        return JSONObject(jsonData)
+    }
+
+    fun getProfile(token: String):JSONObject{
+        val request=Request.Builder()
+            .header("User-Agent", "OkHttp Headers.java")
+            .addHeader("Accept", "application/json")
+            .method("GET",null)
+            .url(url+"/me?userToken=${token}")
             .build()
         val response = client.newCall(request).execute()
         val jsonData = response.body()?.string();

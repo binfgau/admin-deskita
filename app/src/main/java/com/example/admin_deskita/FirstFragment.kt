@@ -1,7 +1,6 @@
 package com.example.admin_deskita
 
 import android.content.Context
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.StrictMode
 import android.os.StrictMode.ThreadPolicy
@@ -12,6 +11,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.admin_deskita.databinding.FragmentFirstBinding
+import com.example.admin_deskita.support.OTPService
 import okhttp3.*
 import org.json.JSONObject
 
@@ -64,7 +64,7 @@ class FirstFragment : Fragment() {
 
                 val request = Request.Builder()
                     .method("POST", login)
-                    .url("https://deskita-ecommerce.herokuapp.com/api/v1/user/login")
+                    .url("https://deskita-ecommerce.herokuapp.com/api/v1/admin/login")
                     .build()
 
                 val response = client.newCall(request).execute()
@@ -73,12 +73,18 @@ class FirstFragment : Fragment() {
                 val token=json.getString("token")
                 val preferences= activity?.getSharedPreferences("admin_deskita",Context.MODE_PRIVATE)
                 preferences?.edit()?.putString("TOKEN",token)?.apply()
-                findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
+
+
+
+                findNavController().navigate(R.id.action_FirstFragment_to_ConfirmFragment)
             }catch(e: Exception){
 //code that handles exception
-               Log.d("testcoi",e.stackTraceToString())
+                Log.d("errorrrrr", e.message.toString())
             }
 
+        }
+        binding.btnForgotPassword.setOnClickListener{
+            findNavController().navigate(R.id.action_FirstFragment_to_ForgotPasswordFragment)
         }
     }
 

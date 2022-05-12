@@ -6,15 +6,19 @@
         <entry key="..\:/TaiLieu/nam4-hk2/app/src/main/res/layout/activity_main.xml" value="0.22708333333333333" />
         <entry key="..\:/TaiLieu/nam4-hk2/app/src/main/res/layout/activity_order.xml" value="0.10989583333333333" />
         <entry key="..\:/TaiLieu/nam4-hk2/app/src/main/res/layout/content_main.xml" value="0.22708333333333333" />
+        <entry key="..\:/TaiLieu/nam4-hk2/app/src/main/res/layout/fragment_analytic.xml" value="0.4" />
+        <entry key="..\:/TaiLieu/nam4-hk2/app/src/main/res/layout/fragment_confirm.xml" value="0.1" />
         <entry key="..\:/TaiLieu/nam4-hk2/app/src/main/res/layout/fragment_customer.xml" value="0.425" />
         <entry key="..\:/TaiLieu/nam4-hk2/app/src/main/res/layout/fragment_customer_detail.xml" value="0.10989583333333333" />
         <entry key="..\:/TaiLieu/nam4-hk2/app/src/main/res/layout/fragment_first.xml" value="0.22826086956521738" />
         <entry key="..\:/TaiLieu/nam4-hk2/app/src/main/res/layout/fragment_first2.xml" value="0.10989583333333333" />
+        <entry key="..\:/TaiLieu/nam4-hk2/app/src/main/res/layout/fragment_forgot_password.xml" value="0.2028985507246377" />
         <entry key="..\:/TaiLieu/nam4-hk2/app/src/main/res/layout/fragment_order.xml" value="0.10989583333333333" />
         <entry key="..\:/TaiLieu/nam4-hk2/app/src/main/res/layout/fragment_order_detail.xml" value="0.2" />
         <entry key="..\:/TaiLieu/nam4-hk2/app/src/main/res/layout/fragment_product.xml" value="0.22708333333333333" />
         <entry key="..\:/TaiLieu/nam4-hk2/app/src/main/res/layout/fragment_product_detail.xml" value="0.264" />
         <entry key="..\:/TaiLieu/nam4-hk2/app/src/main/res/layout/fragment_product_list.xml" value="0.21302083333333333" />
+        <entry key="..\:/TaiLieu/nam4-hk2/app/src/main/res/layout/fragment_recovery_password.xml" value="0.11458333333333333" />
         <entry key="..\:/TaiLieu/nam4-hk2/app/src/main/res/layout/fragment_second.xml" value="0.22708333333333333" />
         <entry key="..\:/TaiLieu/nam4-hk2/app/src/main/res/layout/list_customer.xml" value="0.25364583333333335" />
         <entry key="..\:/TaiLieu/nam4-hk2/app/src/main/res/layout/list_order.xml" value="0.264" />

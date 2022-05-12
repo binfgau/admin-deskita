@@ -3,8 +3,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/SecondFragment">
+    app:startDestination="@id/FirstFragment">
 
+    <fragment
+        android:id="@+id/ForgotPasswordFragment"
+        android:name="com.example.admin_deskita.ForgotPasswordFragment"
+        tools:layout="@layout/fragment_forgot_password">
+        <action
+            android:id="@+id/action_ForgotPasswordFragment_to_RecoveryPasswordFragment"
+            app:destination="@id/RecoveryPasswordFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/RecoveryPasswordFragment"
+        android:name="com.example.admin_deskita.RecoveryPasswordFragment"
+        tools:layout="@layout/fragment_recovery_password">
+    </fragment>
     <fragment
         android:id="@+id/FirstFragment"
         android:name="com.example.admin_deskita.FirstFragment"
@@ -12,7 +25,19 @@
         tools:layout="@layout/fragment_first">
 
         <action
-            android:id="@+id/action_FirstFragment_to_SecondFragment"
+            android:id="@+id/action_FirstFragment_to_ConfirmFragment"
+            app:destination="@id/ConfirmFragment" />
+        <action
+            android:id="@+id/action_FirstFragment_to_ForgotPasswordFragment"
+            app:destination="@id/ForgotPasswordFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/ConfirmFragment"
+        android:name="com.example.admin_deskita.ConfirmFragment"
+        android:label=""
+        tools:layout="@layout/fragment_confirm">
+        <action
+            android:id="@+id/action_ConfirmFragment_to_SecondFragment"
             app:destination="@id/SecondFragment" />
     </fragment>
     <fragment
@@ -70,6 +95,11 @@
             />
     </fragment>
     <fragment
+        android:id="@+id/AnalyticFragment"
+        android:name="com.example.admin_deskita.AnalyticFragment"
+        android:label=""
+        tools:layout="@layout/fragment_analytic"></fragment>
+    <fragment
         android:id="@+id/SecondFragment"
         android:name="com.example.admin_deskita.SecondFragment"
         android:label="@string/second_fragment_label"
@@ -87,6 +117,9 @@
         <action
             android:id="@+id/action_SecondFragment_to_CustomerFragment"
             app:destination="@id/CustomerFragment" />
+        <action
+            android:id="@+id/action_SecondFragment_to_AnalyticFragment"
+            app:destination="@id/AnalyticFragment" />
     </fragment>
 
 

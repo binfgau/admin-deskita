@@ -3,21 +3,16 @@ package com.example.admin_deskita
 import android.content.Context
 import android.os.Bundle
 import android.os.StrictMode
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.ListView
+import android.widget.Button
+import android.widget.EditText
+import android.widget.Toast
 import androidx.navigation.fragment.findNavController
-import com.example.admin_deskita.adapter.CustomersAdapter
-import com.example.admin_deskita.adapter.OrderItemsAdapter
-import com.example.admin_deskita.entity.Customer
 import com.example.admin_deskita.request.DeskitaService
-import org.json.JSONArray
-import org.json.JSONObject
+import com.example.admin_deskita.support.OTPService
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -26,14 +21,15 @@ private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
- * Use the [CustomerFragment.newInstance] factory method to
+ * Use the [ConfirmFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class CustomerFragment : Fragment() {
+class ConfirmFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-    private val client =DeskitaService()
+    private val client = DeskitaService()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -47,52 +43,37 @@ class CustomerFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_customer, container, false)
+        return inflater.inflate(R.layout.fragment_confirm, container, false)
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val policy = StrictMode.ThreadPolicy.Builder().permitAll().build()
         StrictMode.setThreadPolicy(policy)
 
-        //set list customer
-    try {
         val prefs=activity?.getSharedPreferences("admin_deskita", Context.MODE_PRIVATE)
         val token = prefs?.getString("TOKEN",null)!!
-        var res: JSONObject =client.getUsers("user",token);
+        val res=client.getProfile(token)
+        val user=res.getJSONObject("user")
+        val phoneNumber=user.getString("phoneNumber")
 
-        var users=res.getJSONArray("user");
-        val array:ArrayList<Customer> = ArrayList()
-        for(i in 0 until users.length()){
-            val customer=users.getJSONObject(i)
-            val customerModel=Customer(customer.getString("_id"),customer.getJSONObject("avatar").getString("url"),
-                customer.getString("name"),customer.getString("emailUser"),customer.getString("phoneNumber")
-            )
-            array.add(customerModel)
-        }
-        val lvCustomers=view.findViewById(R.id.customers) as ListView
-        val adapter= context?.let { CustomersAdapter(it,R.layout.list_customer,array) }
-        lvCustomers.adapter=adapter
+        val otp=OTPService()
+        otp.sendVerificationCode(phoneNumber)
 
-        lvCustomers.onItemClickListener = object : AdapterView.OnItemClickListener {
-
-            override fun onItemClick(parent: AdapterView<*>, view: View,
-                                     position: Int, id: Long) {
-
-                // value of item that is clicked
-                val preferences= activity?.getSharedPreferences("admin_deskita", Context.MODE_PRIVATE)
-                val id=array.get(position).id
-                preferences?.edit()?.putString("customer_id",id)?.apply()
-
-                findNavController().navigate(R.id.to_customer_detail_fragment)
+        val confirmOTP:Button=view.findViewById(R.id.btnConfimOTP)
+        confirmOTP.setOnClickListener {
+            val confirmOTP:EditText=view.findViewById(R.id.etConfirmOTP)
+            val res:Boolean=otp.verifyCode(confirmOTP.text.toString())
+            if(res==true){
+                findNavController().navigate(R.id.action_ConfirmFragment_to_SecondFragment)
+            }
+            else{
+                Toast.makeText(
+                    activity, "Mã không khớp",
+                    Toast.LENGTH_LONG
+                ).show()
             }
         }
-
-    }catch (e:Exception){
-        Log.d("error",e.printStackTrace().toString())
     }
-    }
-
-
     companion object {
         /**
          * Use this factory method to create a new instance of
@@ -100,12 +81,12 @@ class CustomerFragment : Fragment() {
          *
          * @param param1 Parameter 1.
          * @param param2 Parameter 2.
-         * @return A new instance of fragment CustomerFragment.
+         * @return A new instance of fragment ConfirmFragment.
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            CustomerFragment().apply {
+            ConfirmFragment().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)
