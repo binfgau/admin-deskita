@@ -10,6 +10,7 @@ import org.json.JSONObject
 import java.util.*
 
 
+
 class DeskitaService : Fragment() {
     val client = OkHttpClient()
     val url="https://deskita-ecommerce.herokuapp.com/api/v1"
@@ -134,6 +135,29 @@ class DeskitaService : Fragment() {
             .addHeader("Accept", "application/json")
             .method("GET",null)
             .url(url+"/me?userToken=${token}")
+            .build()
+        val response = client.newCall(request).execute()
+        val jsonData = response.body()?.string();
+        return JSONObject(jsonData)
+    }
+    fun updateProfile(token: String, img: String, name: String, email: String, birth: String, phone: String, place: String):JSONObject{
+        val data: Map<String, Any> = mapOf(
+            "name" to name,
+            "emailUser" to email,
+            "dateOfBirth" to birth,
+            "phoneNumber" to phone,
+            "placeOfBirth" to place
+        )
+//        var requestBody =  data.toReq
+        val formBody: RequestBody = FormBody.Builder()
+            .add("avatarPR",img)
+            .add("data", data.toString())
+            .build()
+        val request=Request.Builder()
+            .header("User-Agent", "OkHttp Headers.java")
+            .addHeader("Accept", "application/json")
+            .method("PUT",formBody)
+            .url(url+"/user/update-profile?userToken=${token}")
             .build()
         val response = client.newCall(request).execute()
         val jsonData = response.body()?.string();

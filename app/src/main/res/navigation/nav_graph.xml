@@ -102,6 +102,11 @@
         android:label=""
         tools:layout="@layout/fragment_analytic"></fragment>
     <fragment
+        android:id="@+id/ProfileFragment"
+        android:name="com.example.admin_deskita.ProfileFragment"
+        android:label=""
+        tools:layout="@layout/fragment_profile"></fragment>
+    <fragment
         android:id="@+id/SecondFragment"
         android:name="com.example.admin_deskita.SecondFragment"
         android:label="@string/second_fragment_label"
@@ -122,6 +127,9 @@
         <action
             android:id="@+id/action_SecondFragment_to_AnalyticFragment"
             app:destination="@id/AnalyticFragment" />
+        <action
+            android:id="@+id/action_SecondFragment_to_ProfileFragment"
+            app:destination="@id/ProfileFragment" />
     </fragment>
 
 

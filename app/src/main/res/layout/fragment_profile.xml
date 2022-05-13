@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ProfileFragment">
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/save1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/imgProfile"
+                    android:layout_width="220dp"
+                    android:layout_height="270dp"
+                    android:layout_marginTop="3dp"
+                    android:layout_marginBottom="5dp" />
+
+                <Button
+                    android:id="@+id/select_image1"
+                    android:layout_width="140dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/round_gray_button"
+                    android:text="Select image"
+                    android:textAllCaps="false"
+                    android:textColor="@color/textBlack" />
+
+            </LinearLayout>
+
+            <View
+                android:id="@+id/separater0"
+                android:layout_width="match_parent"
+                android:layout_height="7dp"
+                android:background="?android:attr/listDivider" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:drawableLeft="@drawable/ic_info_24"
+                android:drawablePadding="7dp"
+                android:padding="5dp"
+                android:text="Basic info:"
+                android:textColor="@color/textBlack"
+                android:textSize="18dp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="?android:attr/listDivider" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="5dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="75dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="Name:        "
+                    android:textColor="@color/textBlack"
+                    android:textSize="16dp" />
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/nameprofile"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="name"
+                    android:imeOptions="actionDone"
+                    android:singleLine="true" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="5dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="75dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="Email: "
+                    android:textColor="@color/textBlack"
+                    android:textSize="16dp" />
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/emailprofile"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="email"
+                    android:editable="false"
+                    android:imeOptions="actionDone"
+                    android:singleLine="true" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="5dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="75dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="Birthday: "
+                    android:textColor="@color/textBlack"
+                    android:textSize="16dp" />
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/birthdayprofile"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Birthday" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="5dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="7dp"
+                    android:gravity="center_vertical"
+                    android:text="Phone: "
+                    android:textColor="@color/textBlack"
+                    android:textSize="16dp" />
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/phoneprofile"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Phone" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="5dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="7dp"
+                    android:gravity="center_vertical"
+                    android:text="From:   "
+                    android:textColor="@color/textBlack"
+                    android:textSize="16dp" />
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/fromprofile"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Place Of Birth" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="7dp"
+                android:background="?android:attr/listDivider" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="5dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="7dp"
+                    android:gravity="center_vertical"
+                    android:text="Role:   "
+                    android:textColor="@color/textBlack"
+                    android:textSize="16dp" />
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/roleprofile"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:editable="false"
+                    android:hint="Role" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+    <Button
+        android:id="@+id/save1"
+        android:layout_width="match_parent"
+        android:layout_height="58dp"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="center_horizontal"
+        android:backgroundTint="@color/confirm"
+        android:drawableLeft="@drawable/ic_confirm_35"
+        android:drawablePadding="20dp"
+        android:gravity="center_vertical"
+        android:paddingLeft="160dp"
+        android:text="Edit"
+        android:textSize="16dp"
+        android:textStyle="bold" />
+</RelativeLayout>

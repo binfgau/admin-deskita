@@ -131,9 +131,7 @@ class ProductDetailFragment : Fragment() {
     }
 
     fun save(){
-
-            val inputStream: InputStream? =context?.contentResolver?.openInputStream(imageUri)
-
+        val inputStream: InputStream? =context?.contentResolver?.openInputStream(imageUri)
         val selectedImage = BitmapFactory.decodeStream(inputStream)
         val encodedImage="data:"+context?.contentResolver?.getType(imageUri)+";base64,"+BitMapToString(selectedImage)
 

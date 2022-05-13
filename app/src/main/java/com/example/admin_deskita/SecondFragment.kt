@@ -62,6 +62,9 @@ class SecondFragment : Fragment() {
                 if (position==2){
                     findNavController().navigate(R.id.action_SecondFragment_to_CustomerFragment)
                 }
+                if (position==3){
+                    findNavController().navigate(R.id.action_SecondFragment_to_ProfileFragment)
+                }
                 if (position==5){
                     findNavController().navigate(R.id.action_SecondFragment_to_AnalyticFragment)
                 }
