@@ -71,7 +71,8 @@ class ProductDetailFragment : Fragment() {
             android.R.layout.simple_spinner_dropdown_item,classifies) }
 
         binding.classify.adapter=adapter
-
+        binding.description.setHorizontallyScrolling(false)
+        binding.description.maxLines = 20
         //category
         val categories= arrayOf("jacketsCoats","hoodiesSweatshirts","cardiganJumpers","tshirtTanks",
             "shoes","shirts","basics","blazersSuits","shorts","trousers","jeans","swimwear",
@@ -107,14 +108,14 @@ class ProductDetailFragment : Fragment() {
                 getJSONObject(0)?.getString("url"))
             val bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream())
 
-            binding.productImage.setImageBitmap(bmp)
+            binding.imgProductDetail.setImageBitmap(bmp)
         }
         //new product
         else{
             val url= URL("https://www.chanchao.com.tw/vietnamwood/images/default.jpg")
             val bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream())
 
-            binding.productImage.setImageBitmap(bmp)
+            binding.imgProductDetail.setImageBitmap(bmp)
         }
 
         //select image
@@ -157,7 +158,7 @@ class ProductDetailFragment : Fragment() {
 
             try {
                 imageUri = data!!.data!!
-                binding.productImage.setImageURI(imageUri)
+                binding.imgProductDetail.setImageURI(imageUri)
 
             }catch (e:Exception){
                 Log.d("error_error",e.stackTraceToString())

@@ -17,8 +17,8 @@ class OrdersAdapter(private val context: Activity, private val title: ArrayList<
         val inflater = context.layoutInflater
         val rowView = inflater.inflate(R.layout.list_product, null, true)
 
-        val titleText = rowView.findViewById(R.id.title) as TextView
-        val imageView = rowView.findViewById(R.id.icon) as ImageView
+        val titleText = rowView.findViewById(R.id.txtProductName) as TextView
+        val imageView = rowView.findViewById(R.id.imgProduct) as ImageView
         val subtitleText = rowView.findViewById(R.id.description) as TextView
         val url= URL(imgurl[position])
         val bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream())

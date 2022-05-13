@@ -11,7 +11,10 @@ import android.widget.AdapterView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.admin_deskita.databinding.FragmentProductBinding
-import com.example.admin_deskita.support.SelectRecipeDetailFragment
+import com.example.admin_deskita.entity.ListProductContainer
+import com.example.admin_deskita.entity.Product
+import com.example.admin_deskita.entity.ProductContainer
+import com.google.gson.Gson
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import org.json.JSONArray
@@ -29,8 +32,8 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 
-class Token{
-    public var userToken:String=""
+class Token {
+    public var userToken: String = ""
 
 
 }
@@ -42,7 +45,6 @@ class ProductFragment : Fragment() {
     val client = OkHttpClient()
     private var _binding: FragmentProductBinding? = null
     private val binding get() = _binding!!
-    private var productIds=ArrayList<String>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -65,9 +67,31 @@ class ProductFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val policy = StrictMode.ThreadPolicy.Builder().permitAll().build()
         StrictMode.setThreadPolicy(policy)
-        try {
-            var products: JSONArray?=null
 
+        getAllProduct()
+
+        binding.lvProducts.setOnItemClickListener { adapterView, view, i, l ->
+            try {
+                val clickProduct = adapterView.getItemAtPosition(i) as Product
+                val id = clickProduct._id
+                val preferences =
+                    activity?.getSharedPreferences("admin_deskita", Context.MODE_PRIVATE)
+                preferences?.edit()?.putString("product_id", id)?.apply()
+
+                findNavController().navigate(R.id.to_product_detail_fragment)
+
+
+            } catch (e: Exception) {
+                print(e.stackTraceToString())
+                Log.d("testcoi", e.stackTraceToString())
+
+            }
+
+        }
+    }
+
+    private fun getAllProduct() {
+        try {
             val request = Request.Builder()
                 .header("User-Agent", "OkHttp Headers.java")
                 .addHeader("Accept", "application/json")
@@ -76,63 +100,12 @@ class ProductFragment : Fragment() {
                 .build()
             val response = client.newCall(request).execute()
             val jsonData = response.body()?.string();
-            val json: JSONObject = JSONObject(jsonData)
-            products= json.getJSONArray("products")
-            products?.let { loadItems(it) }
-
-
-        }catch(e: Exception){
-//code that handles exception
-            Log.d("testcoi",e.stackTraceToString())
+            val container = Gson().fromJson(jsonData, ListProductContainer::class.java)
+            binding.lvProducts.adapter = ProductsAdapter(requireContext(),container.products)
+        } catch (e: Exception) {
+            //code that handles exception
+            Log.d("testcoi", e.stackTraceToString())
         }
-
-        binding.products.onItemClickListener=  AdapterView.OnItemClickListener { arg0, arg1, position, arg3 ->
-
-            try {
-                print(position)
-
-                val id=productIds.get(position)
-                val preferences= activity?.getSharedPreferences("admin_deskita", Context.MODE_PRIVATE)
-                preferences?.edit()?.putString("product_id",id)?.apply()
-
-
-
-
-
-
-                findNavController().navigate(R.id.to_product_detail_fragment)
-
-
-            }catch (e: Exception){
-                print(e.stackTraceToString())
-                Log.d("testcoi",e.stackTraceToString())
-
-            }
-
-        }
-
-
-
-
-    }
-
-
-    fun loadItems(products:JSONArray){
-        val languages= arrayListOf<String>()
-        val quantities= arrayListOf<String>()
-        val urlImages= arrayListOf<String>()
-        for(i in 0 until products.length()){
-            val product =products.getJSONObject(i)
-            productIds.add(product.getString("_id"))
-            languages.add(product.getString("name"))
-            quantities.add(Integer.toString(product.getInt("stock")))
-            val urlImage=product.getJSONArray("images").getJSONObject(0).getString("url")
-            urlImages.add(urlImage)
-        }
-
-
-        val itemAdapter= activity?.let { ProductsAdapter(context = it,languages,quantities,urlImages) }
-        binding.products.adapter=itemAdapter
     }
 
     companion object {
