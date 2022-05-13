@@ -76,7 +76,7 @@ class FirstFragment : Fragment() {
 
 
 
-                findNavController().navigate(R.id.action_FirstFragment_to_ConfirmFragment)
+                findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
             }catch(e: Exception){
 //code that handles exception
                 Log.d("errorrrrr", e.message.toString())
