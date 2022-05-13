@@ -15,12 +15,20 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Admindeskita">
-
         <activity
-            android:name=".OrderActivity"
+            android:name=".AddUpdateProductAct"
             android:exported="false"
-            android:label="@string/title_activity_order"
+            android:label="@string/title_activity_add_update_product"
             android:theme="@style/Theme.Admindeskita.NoActionBar" />
+        <activity
+            android:name=".RecoveryPasswordAct"
+            android:exported="false" />
+        <activity
+            android:name=".ForgotPasswordAct"
+            android:exported="false" />
+        <activity
+            android:name=".LoginActivity"
+            android:exported="true" />
         <activity
             android:name=".MainActivity"
             android:exported="true"

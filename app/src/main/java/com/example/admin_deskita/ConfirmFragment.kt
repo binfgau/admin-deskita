@@ -64,7 +64,7 @@ class ConfirmFragment : Fragment() {
             val confirmOTP:EditText=view.findViewById(R.id.etConfirmOTP)
             val res:Boolean=otp.verifyCode(confirmOTP.text.toString())
             if(res==true){
-                findNavController().navigate(R.id.action_ConfirmFragment_to_SecondFragment)
+                //findNavController().navigate(R.id.action_ConfirmFragment_to_SecondFragment)
             }
             else{
                 Toast.makeText(

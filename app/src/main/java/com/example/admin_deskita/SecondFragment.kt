@@ -53,7 +53,7 @@ class SecondFragment : Fragment() {
         binding.listFeatures.onItemClickListener =
             OnItemClickListener { arg0, arg1, position, arg3 ->
 
-                if (position==0){
+                /*if (position==0){
                     findNavController().navigate(R.id.action_SecondFragment_to_ProductFragment)
                 }
                 if (position==1){
@@ -67,10 +67,10 @@ class SecondFragment : Fragment() {
                 }
                 if (position==5){
                     findNavController().navigate(R.id.action_SecondFragment_to_AnalyticFragment)
-                }
+                }*/
             }
         binding.buttonSecond.setOnClickListener {
-            findNavController().navigate(R.id.action_SecondFragment_to_FirstFragment)
+
         }
     }
 

@@ -1,0 +1,21 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.example.admin_deskita.MainActivity">
+
+    <item android:id="@+id/itAnalytic"
+        android:title="@string/analytic"
+        android:icon="@drawable/analytic"/>
+
+    <item android:id="@+id/itProducts"
+        android:title="@string/products"
+        android:icon="@drawable/product"/>
+
+    <item android:id="@+id/itCustomers"
+        android:title="@string/customers"
+        android:icon="@drawable/customers"/>
+
+    <item android:id="@+id/itOrders"
+        android:title="@string/orders"
+        android:icon="@drawable/orders"/>
+</menu>

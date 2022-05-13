@@ -1,6 +1,8 @@
 package com.example.admin_deskita
 
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.os.StrictMode
 import android.util.Log
@@ -15,6 +17,7 @@ import com.example.admin_deskita.entity.ListProductContainer
 import com.example.admin_deskita.entity.Product
 import com.example.admin_deskita.entity.ProductContainer
 import com.google.gson.Gson
+import kotlinx.android.synthetic.main.fragment_product.*
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import org.json.JSONArray
@@ -45,6 +48,8 @@ class ProductFragment : Fragment() {
     val client = OkHttpClient()
     private var _binding: FragmentProductBinding? = null
     private val binding get() = _binding!!
+    val ACT_UPDATE = 1
+    val ACT_ADD = 2
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -74,19 +79,23 @@ class ProductFragment : Fragment() {
             try {
                 val clickProduct = adapterView.getItemAtPosition(i) as Product
                 val id = clickProduct._id
-                val preferences =
-                    activity?.getSharedPreferences("admin_deskita", Context.MODE_PRIVATE)
-                preferences?.edit()?.putString("product_id", id)?.apply()
 
-                findNavController().navigate(R.id.to_product_detail_fragment)
-
-
+                val intent = Intent(requireContext(),AddUpdateProductAct::class.java)
+                intent.putExtra("product",clickProduct)
+                startActivityForResult(intent,ACT_UPDATE)
             } catch (e: Exception) {
                 print(e.stackTraceToString())
                 Log.d("testcoi", e.stackTraceToString())
-
             }
 
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode==Activity.RESULT_OK && requestCode==ACT_UPDATE){
+            var product = data?.getSerializableExtra("productUpdate") as Product
+            (lvProducts.adapter as ProductsAdapter).updateProduct(product)
         }
     }
 

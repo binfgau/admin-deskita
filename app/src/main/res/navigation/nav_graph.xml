@@ -3,45 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/SecondFragment">
+    app:startDestination="@id/itAnalytic">
 
-    <fragment
-        android:id="@+id/ForgotPasswordFragment"
-        android:name="com.example.admin_deskita.ForgotPasswordFragment"
-        tools:layout="@layout/fragment_forgot_password">
-        <action
-            android:id="@+id/action_ForgotPasswordFragment_to_RecoveryPasswordFragment"
-            app:destination="@id/RecoveryPasswordFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/RecoveryPasswordFragment"
-        android:name="com.example.admin_deskita.RecoveryPasswordFragment"
-        tools:layout="@layout/fragment_recovery_password">
-    </fragment>
-    <fragment
-        android:id="@+id/FirstFragment"
-        android:name="com.example.admin_deskita.FirstFragment"
-        android:label="@string/first_fragment_label"
-        tools:layout="@layout/fragment_first">
-        <action
-            android:id="@+id/action_FirstFragment_to_SecondFragment"
-            app:destination="@id/SecondFragment" />
-        <action
-            android:id="@+id/action_FirstFragment_to_ConfirmFragment"
-            app:destination="@id/ConfirmFragment" />
-        <action
-            android:id="@+id/action_FirstFragment_to_ForgotPasswordFragment"
-            app:destination="@id/ForgotPasswordFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/ConfirmFragment"
-        android:name="com.example.admin_deskita.ConfirmFragment"
-        android:label=""
-        tools:layout="@layout/fragment_confirm">
-        <action
-            android:id="@+id/action_ConfirmFragment_to_SecondFragment"
-            app:destination="@id/SecondFragment" />
-    </fragment>
     <fragment
         android:id="@+id/CustomerDetailFragment"
         android:name="com.example.admin_deskita.CustomerDetailFragment"
@@ -56,14 +19,9 @@
         tools:layout="@layout/fragment_order_detail">
 
     </fragment>
-    <fragment
-        android:id="@+id/ProductDetailFragment"
-        android:name="com.example.admin_deskita.ProductDetailFragment"
-        android:label="@string/product_fragment_label"
-        tools:layout="@layout/fragment_product_detail"></fragment>
 
     <fragment
-        android:id="@+id/OrderFragment"
+        android:id="@+id/itOrders"
         android:name="com.example.admin_deskita.OrderFragment"
         android:label="@string/order_fragment_label"
         tools:layout="@layout/fragment_order">
@@ -75,7 +33,7 @@
     </fragment>
 
     <fragment
-        android:id="@+id/CustomerFragment"
+        android:id="@+id/itCustomers"
         android:name="com.example.admin_deskita.CustomerFragment"
         android:label=""
         tools:layout="@layout/fragment_customer">
@@ -86,51 +44,15 @@
     </fragment>
 
     <fragment
-        android:id="@+id/ProductFragment"
+        android:id="@+id/itProducts"
         android:name="com.example.admin_deskita.ProductFragment"
         android:label="@string/product_fragment_label"
-        tools:layout="@layout/fragment_product">
-
-        <action
-            android:id="@+id/to_product_detail_fragment"
-            app:destination="@id/ProductDetailFragment"
-            />
-    </fragment>
+        tools:layout="@layout/fragment_product"/>
     <fragment
-        android:id="@+id/AnalyticFragment"
+        android:id="@+id/itAnalytic"
         android:name="com.example.admin_deskita.AnalyticFragment"
         android:label=""
         tools:layout="@layout/fragment_analytic"></fragment>
-    <fragment
-        android:id="@+id/ProfileFragment"
-        android:name="com.example.admin_deskita.ProfileFragment"
-        android:label=""
-        tools:layout="@layout/fragment_profile"></fragment>
-    <fragment
-        android:id="@+id/SecondFragment"
-        android:name="com.example.admin_deskita.SecondFragment"
-        android:label="@string/second_fragment_label"
-        tools:layout="@layout/fragment_second">
-
-        <action
-            android:id="@+id/action_SecondFragment_to_FirstFragment"
-            app:destination="@id/FirstFragment" />
-        <action
-            android:id="@+id/action_SecondFragment_to_ProductFragment"
-            app:destination="@id/ProductFragment" />
-        <action
-            android:id="@+id/action_SecondFragment_to_OrderFragment"
-            app:destination="@id/OrderFragment" />
-        <action
-            android:id="@+id/action_SecondFragment_to_CustomerFragment"
-            app:destination="@id/CustomerFragment" />
-        <action
-            android:id="@+id/action_SecondFragment_to_AnalyticFragment"
-            app:destination="@id/AnalyticFragment" />
-        <action
-            android:id="@+id/action_SecondFragment_to_ProfileFragment"
-            app:destination="@id/ProfileFragment" />
-    </fragment>
 
 
 </navigation>

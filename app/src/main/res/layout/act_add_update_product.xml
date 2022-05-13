@@ -6,16 +6,50 @@
     android:layout_height="match_parent"
     android:baselineAligned="false"
     android:orientation="vertical"
-    tools:ignore="Deprecated">
-
+    tools:ignore="Deprecated"
+    tools:context=".AddUpdateProductAct">
 
     <!-- TODO: Update blank fragment layout -->
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/tbAddUpdateProduct"
+        style="@style/Theme.AppCompat.DayNight.DarkActionBar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@drawable/toolbar"
+        android:minHeight="?attr/actionBarSize"
+        android:paddingLeft="@android:dimen/app_icon_size"
+        android:theme="?attr/actionBarTheme"
+        app:titleTextColor="@color/black">
 
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentLeft="true"
+                android:onClick="goBack"
+                android:src="@drawable/ic_back_24"
+                tools:ignore="OnClick,UsingOnClickInXml" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="130dp"
+                android:gravity="center"
+                android:text="Product info"
+                android:textColor="@color/black"
+                android:textSize="22sp" />
+
+        </RelativeLayout>
+    </androidx.appcompat.widget.Toolbar>
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/save">
+        android:layout_above="@+id/save"
+        android:layout_below="@+id/tbAddUpdateProduct">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -88,7 +122,7 @@
                     android:textSize="16dp" />
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/name"
+                    android:id="@+id/editName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="name"
@@ -113,7 +147,7 @@
                     android:textSize="16dp" />
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/price"
+                    android:id="@+id/editPrice"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="price"

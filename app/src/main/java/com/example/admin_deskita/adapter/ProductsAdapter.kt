@@ -55,4 +55,16 @@ class ProductsAdapter(val context:Context,var lstProduct: ArrayList<Product>) :B
 
         return view
     }
+
+    fun updateProduct(updateProduct: Product){
+        for (p in lstProduct){
+            if (p._id.compareTo(updateProduct._id)==0){
+                val i = lstProduct.indexOf(p)
+                lstProduct.remove(p)
+                lstProduct.add(i,updateProduct)
+                break
+            }
+        }
+        notifyDataSetChanged()
+    }
 }
