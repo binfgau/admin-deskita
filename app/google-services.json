@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "357086578187",
+    "project_id": "admin-deskita",
+    "storage_bucket": "admin-deskita.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:357086578187:android:bc66f80b7096c0cf49690e",
+        "android_client_info": {
+          "package_name": "com.example.admin_deskita"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "357086578187-q8a7p44b8c2uggk4ni15ifml75734e0q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDNfO26E_IRAZP7wrTJH8Ei_SL869H-xYE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "357086578187-q8a7p44b8c2uggk4ni15ifml75734e0q.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
