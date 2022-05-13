@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.os.StrictMode
@@ -15,16 +16,23 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.DatePicker
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.graphics.drawable.toBitmap
 import com.example.admin_deskita.databinding.FragmentProductBinding
 import com.example.admin_deskita.databinding.FragmentProfileBinding
 import com.example.admin_deskita.entity.Customer
 import com.example.admin_deskita.entity.ListProductContainer
 import com.example.admin_deskita.entity.Profile
 import com.example.admin_deskita.request.DeskitaService
+import com.google.android.material.R.*
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.gson.Gson
 import com.google.gson.JsonObject
+import kotlinx.android.synthetic.main.act_add_update_product.*
+import kotlinx.android.synthetic.main.fragment_profile.*
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import org.json.JSONObject
@@ -59,10 +67,8 @@ class ProfileFragment : Fragment() {
         val policy = StrictMode.ThreadPolicy.Builder().permitAll().build()
         StrictMode.setThreadPolicy(policy)
 
-        //  val prefs=activity?.getSharedPreferences("admin_deskita", Context.MODE_PRIVATE)
-//        val token = prefs?.getString("TOKEN",null)!!
-        val token =
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMTdiNTYwNjA1YzAzMjg0YzRlZTc0NiIsImlhdCI6MTY1MjQyMzkwMywiZXhwIjoxNjUzMDI4NzAzfQ.Kl06ryLJNPfswHgzUBgNNbyzp4Ps3BaOz1R-eM7NV14"
+        val prefs = activity?.getSharedPreferences("admin_deskita", Context.MODE_PRIVATE)
+        val token = prefs?.getString("TOKEN", null)!!
         try {
             profile = client.getProfile(token);
             var user = profile.getJSONObject("user")
@@ -77,18 +83,11 @@ class ProfileFragment : Fragment() {
             image.layoutParams.height = 400;
 
             // set name
-            val name = user.getString("name");
-            val nameprofile = view.findViewById(R.id.nameprofile) as TextView
-            nameprofile.text = user.getString("name")
-            val emailprofile = view.findViewById(R.id.emailprofile) as TextView
-            emailprofile.text = user.getString("emailUser")
-            val dateOfBirth = view.findViewById(R.id.birthdayprofile) as TextView
-            dateOfBirth.text = user.getString("dateOfBirth")
-            val phoneprofile = view.findViewById(R.id.phoneprofile) as TextView
-            phoneprofile.text = user.getString("phoneNumber")
-            val placeOfBirth = view.findViewById(R.id.fromprofile) as TextView
-            placeOfBirth.text = user.getString("placeOfBirth")
-            val roleprofile = view.findViewById(R.id.roleprofile) as TextView
+            nameprofile.setText(user.getString("name"))
+            emailprofile.setText(user.getString("emailUser"))
+            birthdayprofile.text = user.getString("dateOfBirth")
+            phoneprofile.setText(user.getString("phoneNumber"))
+            fromprofile.setText(user.getString("placeOfBirth"))
             roleprofile.text = user.getString("role")
 
             //select image
@@ -99,29 +98,49 @@ class ProfileFragment : Fragment() {
             binding.save1.setOnClickListener {
                 save(imageUrl.openConnection().getInputStream())
             }
+
+            bttPickDate.setOnClickListener{
+                dialogPickDate()
+            }
         } catch (e: Exception) {
             client.getProfile(token);
         }
-
-
     }
 
-    fun save(imageUrl : InputStream) {
-        val inputStream: InputStream? = context?.contentResolver?.openInputStream(imageUri)
-        val selectedImage = BitmapFactory.decodeStream(inputStream)
-        val encodedImage =
-            "data:" + context?.contentResolver?.getType(imageUri) + ";base64," + BitMapToString(
-                selectedImage
-            )
-        var token =
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMTdiNTYwNjA1YzAzMjg0YzRlZTc0NiIsImlhdCI6MTY1MjQyMzkwMywiZXhwIjoxNjUzMDI4NzAzfQ.Kl06ryLJNPfswHgzUBgNNbyzp4Ps3BaOz1R-eM7NV14"
+    private fun dialogPickDate() {
+        val dialog: BottomSheetDialog = BottomSheetDialog(requireContext(), style.Theme_Design_BottomSheetDialog)
+        val viewDatePicker: View = LayoutInflater.from(requireContext()).inflate(R.layout.dialog_date_picker,null)
 
+        val dpDateOfBirth = viewDatePicker.findViewById<DatePicker>(R.id.dpDateOfBirth)
+        val bttConfirmDate = viewDatePicker.findViewById<Button>(R.id.bttConfirmDate)
+
+        bttConfirmDate.setOnClickListener {
+            var day = dpDateOfBirth.dayOfMonth.toString()
+            if (dpDateOfBirth.dayOfMonth <10) day = "0"+day;
+            var month = (dpDateOfBirth.month+1).toString()
+            if (dpDateOfBirth.month+1 <10) month = "0"+month;
+            val year = dpDateOfBirth.year.toString()
+            val birthDay:String = year +"-"+ month+"-"+day
+
+            birthdayprofile.setText(birthDay)
+            dialog.dismiss()
+        }
+        dialog.setContentView(viewDatePicker)
+        dialog.show()
+    }
+
+    fun save(imageUrl: InputStream) {
+
+        val bitmap = (imgProfile.getDrawable() as BitmapDrawable).toBitmap()
+        val encodedImage="data:image/jpeg;base64,"+BitMapToString(bitmap)
+        val prefs = requireContext().getSharedPreferences("admin_deskita", Context.MODE_PRIVATE)
+        val token = prefs?.getString("TOKEN", null)!!
         var name = binding.nameprofile.text
         var email = binding.emailprofile.text
         var birth = binding.birthdayprofile.text
         var phone = binding.phoneprofile.text
         var place = binding.fromprofile.text
-        client.updateProfile(
+        val resJson = client.updateProfile(
             token,
             encodedImage,
             name.toString(),

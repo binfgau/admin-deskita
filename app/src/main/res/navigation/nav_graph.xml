@@ -6,13 +6,6 @@
     app:startDestination="@id/itAnalytic">
 
     <fragment
-        android:id="@+id/CustomerDetailFragment"
-        android:name="com.example.admin_deskita.CustomerDetailFragment"
-        android:label=""
-        tools:layout="@layout/fragment_customer_detail">
-
-    </fragment>
-    <fragment
         android:id="@+id/OrderDetailFragment"
         android:name="com.example.admin_deskita.OrderDetailFragment"
         android:label="@string/order_fragment_label"
@@ -32,7 +25,7 @@
 
     </fragment>
 
-    <fragment
+   <!-- <fragment
         android:id="@+id/itCustomers"
         android:name="com.example.admin_deskita.CustomerFragment"
         android:label=""
@@ -42,6 +35,13 @@
             app:destination="@id/CustomerDetailFragment"
             />
     </fragment>
+    <fragment
+        android:id="@+id/CustomerDetailFragment"
+        android:name="com.example.admin_deskita.CustomerDetailFragment"
+        android:label=""
+        tools:layout="@layout/fragment_customer_detail">
+
+    </fragment>-->
 
     <fragment
         android:id="@+id/itProducts"
@@ -53,6 +53,9 @@
         android:name="com.example.admin_deskita.AnalyticFragment"
         android:label=""
         tools:layout="@layout/fragment_analytic"></fragment>
-
-
+    <fragment
+        android:id="@+id/itProfile"
+        android:name="com.example.admin_deskita.ProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" />
 </navigation>

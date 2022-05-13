@@ -42,6 +42,7 @@ class AddUpdateProductAct : AppCompatActivity() {
     val client = OkHttpClient()
     lateinit var imageUri: Uri
     lateinit var product: Product
+    var action = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,9 +63,10 @@ class AddUpdateProductAct : AppCompatActivity() {
             android.R.layout.simple_spinner_dropdown_item,categories) }
         category.adapter=adapter
 
+
         product = intent.getSerializableExtra("product") as Product
 
-        if(!product._id.isBlank()){
+        if(product != null){
             val request = Request.Builder()
                 .header("User-Agent", "OkHttp Headers.java")
                 .addHeader("Accept", "application/json")
@@ -90,6 +92,7 @@ class AddUpdateProductAct : AppCompatActivity() {
         }
         //new product
         else{
+            action =1
             val url= URL("https://www.chanchao.com.tw/vietnamwood/images/default.jpg")
             val bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream())
 

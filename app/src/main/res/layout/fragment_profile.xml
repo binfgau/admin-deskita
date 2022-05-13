@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -38,7 +39,8 @@
                     android:background="@drawable/round_gray_button"
                     android:text="Select image"
                     android:textAllCaps="false"
-                    android:textColor="@color/textBlack" />
+                    android:textColor="@color/textBlack"
+                    app:backgroundTint="@null" />
 
             </LinearLayout>
 
@@ -109,8 +111,8 @@
                     android:id="@+id/emailprofile"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="email"
                     android:editable="false"
+                    android:hint="email"
                     android:imeOptions="actionDone"
                     android:singleLine="true" />
             </LinearLayout>
@@ -131,11 +133,26 @@
                     android:textColor="@color/textBlack"
                     android:textSize="16dp" />
 
-                <com.google.android.material.textfield.TextInputEditText
+                <TextView
                     android:id="@+id/birthdayprofile"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Birthday" />
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="40dp"
+                    android:gravity="center_vertical"
+                    android:text="01/01/1970"
+                    android:textColor="@color/textBlack"
+                    android:textSize="18dp" />
+
+                <Button
+                    android:id="@+id/bttPickDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:backgroundTint="#E3E4E4"
+                    android:drawableLeft="@drawable/ic_calendar_15"
+                    android:text="Chọn"
+                    android:textColor="@color/textBlack" />
+
             </LinearLayout>
 
             <LinearLayout
@@ -159,7 +176,9 @@
                     android:id="@+id/phoneprofile"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Phone" />
+                    android:hint="Phone"
+                    android:imeOptions="actionDone"
+                    android:singleLine="true"/>
             </LinearLayout>
 
             <LinearLayout
@@ -208,12 +227,14 @@
                     android:textColor="@color/textBlack"
                     android:textSize="16dp" />
 
-                <com.google.android.material.textfield.TextInputEditText
+                <TextView
                     android:id="@+id/roleprofile"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:editable="false"
-                    android:hint="Role" />
+                    android:layout_height="40dp"
+                    android:hint="Role"
+                    android:textColor="@color/textBlack"
+                    android:textSize="18dp"
+                    android:gravity="center_vertical"/>
             </LinearLayout>
 
         </LinearLayout>

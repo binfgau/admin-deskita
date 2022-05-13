@@ -83,7 +83,7 @@ class CustomerFragment : Fragment() {
                 val id=array.get(position).id
                 preferences?.edit()?.putString("customer_id",id)?.apply()
 
-                findNavController().navigate(R.id.to_customer_detail_fragment)
+                //findNavController().navigate(R.id.to_customer_detail_fragment)
             }
         }
 

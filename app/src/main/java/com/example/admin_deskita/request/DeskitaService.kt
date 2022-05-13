@@ -141,24 +141,24 @@ class DeskitaService : Fragment() {
         return JSONObject(jsonData)
     }
     fun updateProfile(token: String, img: String, name: String, email: String, birth: String, phone: String, place: String):JSONObject{
-        val data: Map<String, Any> = mapOf(
-            "name" to name,
-            "emailUser" to email,
-            "dateOfBirth" to birth,
-            "phoneNumber" to phone,
-            "placeOfBirth" to place
-        )
-//        var requestBody =  data.toReq
-        val formBody: RequestBody = FormBody.Builder()
-            .add("avatarPR",img)
-            .add("data", data.toString())
-            .build()
-        val request=Request.Builder()
-            .header("User-Agent", "OkHttp Headers.java")
-            .addHeader("Accept", "application/json")
-            .method("PUT",formBody)
-            .url(url+"/user/update-profile?userToken=${token}")
-            .build()
+        var params = JSONObject().put("userToken", token)
+        var data = JSONObject()
+        data.put("name", name)
+        data.put("placeOfBirth", place)
+        data.put("dateOfBirth", birth)
+        data.put("phoneNumber", phone)
+        data.put("emailUser", email)
+        data.put("role", "admin")
+        var json = JSONObject()
+        json.put("params", params)
+        json.put("data", data)
+        json.put("avatarPr",img)
+
+        val url = "https://deskita-ecommerce.herokuapp.com/api/v1/user/update-profile"
+        val jsonType = MediaType.parse("application/json; charset=utf-8")
+        val reqBody = RequestBody.create(jsonType, json.toString())
+        val request = Request.Builder().put(reqBody).url(url).build()
+        val client = OkHttpClient()
         val response = client.newCall(request).execute()
         val jsonData = response.body()?.string();
         return JSONObject(jsonData)

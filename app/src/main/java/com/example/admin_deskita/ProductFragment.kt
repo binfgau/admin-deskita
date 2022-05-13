@@ -87,7 +87,11 @@ class ProductFragment : Fragment() {
                 print(e.stackTraceToString())
                 Log.d("testcoi", e.stackTraceToString())
             }
+        }
 
+        binding.imgAddProduct.setOnClickListener{
+            val intent = Intent(requireContext(),AddUpdateProductAct::class.java)
+            startActivityForResult(intent,ACT_ADD)
         }
     }
 
