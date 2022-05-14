@@ -21,4 +21,5 @@
     <string name="orders">Orders</string>
     <string name="title_activity_add_update_product">AddUpdateProductAct</string>
     <string name="your_profile">Your profile</string>
+    <string name="discount">Discount</string>
 </resources>

@@ -6,13 +6,16 @@
     android:layout_height="match_parent"
     android:orientation="horizontal">
 
-
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/customer_user_image"
-        android:layout_width="16dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        tools:srcCompat="@tools:sample/avatars" />
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="10dp"
+        android:contentDescription="Avatar"
+        android:src="@drawable/avatar"
+        android:clickable="true"
+        android:onClick="changeAvatar"/>
 
     <TextView
         android:id="@+id/customer_user_info"

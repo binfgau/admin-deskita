@@ -10,6 +10,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.example.admin_deskita.R
 import com.example.admin_deskita.entity.Customer
+import de.hdodenhof.circleimageview.CircleImageView
 import java.net.URL
 
 class CustomersAdapter(private val context: Context,
@@ -38,7 +39,7 @@ class CustomersAdapter(private val context: Context,
         val customer= listCustomer?.get(position)
 
         val imageUrl = URL(customer!!.image)
-        val image= convertView?.findViewById(R.id.customer_user_image) as ImageView
+        val image= convertView?.findViewById(R.id.customer_user_image) as CircleImageView
         val bitmap = BitmapFactory.decodeStream(imageUrl.openConnection().getInputStream())
         image.setImageBitmap(bitmap)
         image.requestLayout();

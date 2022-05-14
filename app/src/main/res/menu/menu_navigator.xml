@@ -3,6 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.example.admin_deskita.MainActivity">
 
+    <item android:id="@+id/itProfile"
+        android:title="@string/your_profile"
+        android:icon="@drawable/profile"/>
+
     <item android:id="@+id/itAnalytic"
         android:title="@string/analytic"
         android:icon="@drawable/analytic"/>
@@ -19,7 +23,7 @@
         android:title="@string/orders"
         android:icon="@drawable/orders"/>
 
-    <item android:id="@+id/itProfile"
-        android:title="@string/your_profile"
-        android:icon="@drawable/profile"/>
+    <item android:id="@+id/itDiscount"
+        android:title="@string/discount"
+        android:icon="@drawable/discounts"/>
 </menu>

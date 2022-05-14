@@ -61,8 +61,10 @@ class CustomerFragment : Fragment() {
         val array:ArrayList<Customer> = ArrayList()
         for(i in 0 until users.length()){
             val customer=users.getJSONObject(i)
-            val customerModel=Customer(customer.getString("_id"),customer.getJSONObject("avatar").getString("url"),
-                customer.getString("name"),customer.getString("emailUser"),customer.getString("phoneNumber")
+            val customerModel=Customer(customer.getString("_id"),
+                customer.getJSONObject("avatar").getString("url"),
+                customer.getString("name"),customer.getString("emailUser"),
+                customer.getString("phoneNumber")
             )
             array.add(customerModel)
         }
