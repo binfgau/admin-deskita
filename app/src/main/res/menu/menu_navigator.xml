@@ -11,9 +11,9 @@
         android:title="@string/products"
         android:icon="@drawable/product"/>
 
-    <item android:id="@+id/itCustomers"
+    <!--<item android:id="@+id/itCustomers"
         android:title="@string/customers"
-        android:icon="@drawable/customers"/>
+        android:icon="@drawable/customers"/>-->
 
     <item android:id="@+id/itOrders"
         android:title="@string/orders"
