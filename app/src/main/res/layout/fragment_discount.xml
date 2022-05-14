@@ -1,17 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".DiscountFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+
+    <LinearLayout
+        android:id="@+id/lyFunc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:background="#F8EFEFEF">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#FFFFFF"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="5dp"
+            android:layout_weight="1">
+            <TextView
+                android:id="@+id/addDiscount"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="Add Discount..."
+                android:drawablePadding="5dp"
+                android:imeOptions="actionDone"
+                android:singleLine="true"
+                />
+        </LinearLayout>
+        <ImageView
+            android:id="@+id/addDiscountImg"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_add_24"
+            android:layout_weight="0"/>
+    </LinearLayout>
+    <ListView
+        android:id="@+id/lvDiscount"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:textSize="30dp"
-        android:text="Discount fragment"
-        android:layout_gravity="center"
-        android:gravity="center"/>
+        android:layout_below="@id/lyFunc"/>
 
-</FrameLayout>
+</RelativeLayout>

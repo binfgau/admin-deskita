@@ -161,4 +161,16 @@ class DeskitaService : Fragment() {
         val jsonData = response.body()?.string();
         return JSONObject(jsonData)
     }
+
+    fun getDiscount(token: String):JSONObject{
+        val request=Request.Builder()
+            .header("User-Agent", "OkHttp Headers.java")
+            .addHeader("Accept", "application/json")
+            .method("GET",null)
+            .url(url+"/admin/discounts?keyword=&userToken=${token}")
+            .build()
+        val response = client.newCall(request).execute()
+        val jsonData = response.body()?.string();
+        return JSONObject(jsonData)
+    }
 }
