@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ListView
+import androidx.navigation.fragment.findNavController
 import com.example.admin_deskita.adapter.CustomersAdapter
 import com.example.admin_deskita.entity.Customer
 import com.example.admin_deskita.request.DeskitaService
@@ -79,7 +80,7 @@ class CustomerFragment : Fragment() {
                 val id=array.get(position).id
                 preferences?.edit()?.putString("customer_id",id)?.apply()
 
-                //findNavController().navigate(R.id.to_customer_detail_fragment)
+                findNavController().navigate(R.id.to_customer_detail_fragment)
             }
         }
 
