@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
+    android:orientation="vertical"
+    android:background="@drawable/order_row_border">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:layout_margin="10dp">
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="25dp"
+            android:layout_margin="5dp"
+            android:src="@drawable/ic_orders"
+            android:layout_weight="0"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:text="Mã đơn: "
+            android:textColor="@color/textBlack"
+            android:textSize="16dp"
+            android:layout_weight="0"/>
+
+        <TextView
+            android:id="@+id/txtOrderId"
+            android:layout_width="match_parent"
+            android:layout_height="22dp"
+            android:layout_marginRight="5dp"
+            android:gravity="center_vertical"
+            android:text="6djs5fit5yov1a3a7tmv52f5sdfasdf23asdfsa"
+            android:textColor="@color/textBlack"
+            android:textSize="16dp"
+            android:layout_weight="1"/>
+
+        <TextView
+            android:id="@+id/bttDeleteOrder"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:clickable="true"
+            android:drawableRight="@drawable/ic_delete_24"
+            android:drawablePadding="3dp"
+            android:gravity="center_vertical"
+            android:text="Xóa"
+            android:textColor="@color/red_click"
+            android:textSize="16dp"
+            android:textStyle="italic"
+            android:layout_weight="0"/>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="?android:attr/listDivider" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp">
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/ic_calendar_24"
+            android:layout_marginRight="5dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:text="Ngày đặt: "
+            android:textColor="@color/textBlack"
+            android:textSize="16dp" />
+
+        <TextView
+            android:id="@+id/txtOrderDate"
+            android:layout_width="match_parent"
+            android:layout_height="26dp"
+            android:layout_marginRight="5dp"
+            android:gravity="center_vertical"
+            android:text=""
+            android:textColor="@color/textBlack"
+            android:textSize="16dp" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="?android:attr/listDivider" />
+
+    <ListView
+        android:id="@+id/lstOrderItems"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="?android:attr/listDivider" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center_vertical"
+        android:padding="5dp">
+
+        <Button
+            android:id="@+id/bttAction"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="10dp"
+            android:backgroundTint="@color/confirm" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_toLeftOf="@+id/txtTotalOrder"
+            android:gravity="center_vertical"
+            android:text="Thành tiền: "
+            android:textColor="@color/textBlack"
+            android:textSize="18dp" />
+
+        <TextView
+            android:id="@+id/txtTotalOrder"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            android:gravity="center_vertical"
+            android:text="200$"
+            android:textColor="@color/orange"
+            android:textSize="18dp" />
+    </RelativeLayout>
+</LinearLayout>

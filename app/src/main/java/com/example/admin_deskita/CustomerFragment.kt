@@ -9,14 +9,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
-import android.widget.ArrayAdapter
 import android.widget.ListView
-import androidx.navigation.fragment.findNavController
 import com.example.admin_deskita.adapter.CustomersAdapter
-import com.example.admin_deskita.adapter.OrderItemsAdapter
 import com.example.admin_deskita.entity.Customer
 import com.example.admin_deskita.request.DeskitaService
-import org.json.JSONArray
 import org.json.JSONObject
 
 // TODO: Rename parameter arguments, choose names that match

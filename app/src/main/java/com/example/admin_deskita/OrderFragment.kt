@@ -1,24 +1,25 @@
 package com.example.admin_deskita
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.os.Bundle
 import android.os.StrictMode
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.ListView
-import android.widget.Toast
-import androidx.navigation.fragment.findNavController
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentPagerAdapter
+import com.example.admin_deskita.entity.MyOrder
+import com.example.admin_deskita.entity.Order
+import com.example.admin_deskita.entity.OrderStatus
+import com.example.admin_deskita.orderstatusfrags.CompletedFragment
+import com.example.admin_deskita.orderstatusfrags.ConfirmedFragment
+import com.example.admin_deskita.orderstatusfrags.DeliveredFragment
+import com.example.admin_deskita.orderstatusfrags.ProcessingFragment
 import com.example.admin_deskita.request.DeskitaService
-import okhttp3.OkHttpClient
-import okhttp3.Request
-import org.json.JSONArray
-import org.json.JSONObject
+import com.google.gson.GsonBuilder
+import kotlinx.android.synthetic.main.fragment_order.*
+import okhttp3.*
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -30,11 +31,33 @@ private const val ARG_PARAM2 = "param2"
  * Use the [OrderFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
+
+class OrderStatusPagerAdapter(fragmentManager: FragmentManager): FragmentPagerAdapter(fragmentManager) {
+
+    val lstOrderStatusFrags = ArrayList<Fragment>()
+
+    override fun getCount(): Int {
+        return lstOrderStatusFrags.size
+    }
+
+    override fun getItem(position: Int): Fragment {
+        return  lstOrderStatusFrags.get(position)
+    }
+
+    fun addFragment(fragment: Fragment){
+        lstOrderStatusFrags.add(fragment)
+    }
+}
+
 class OrderFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
     val client = DeskitaService()
+    lateinit var completedFrag: CompletedFragment
+    lateinit var confirmedFragment: ConfirmedFragment
+    lateinit var deliveredFragment: DeliveredFragment
+    lateinit var processingFragment: ProcessingFragment
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -60,47 +83,66 @@ class OrderFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val policy = StrictMode.ThreadPolicy.Builder().permitAll().build()
         StrictMode.setThreadPolicy(policy)
-        try{
-            var orders: JSONArray?=client.getOrders();
+        callGetMyOrder()
+    }
 
-            val array: ArrayList<String> = ArrayList()
-            var ordersId:ArrayList<String> = ArrayList()
-            if (orders != null) {
-                for(i in 0 until orders.length()){
-                    val order =orders.getJSONObject(i)
-
-                    array.add( "Mã đơn hàng: "+order.getString("_id")+"\n"+
-                            "Trạng thái: "+order.getString("orderStatus")+"\n"+
-                            "Phương thức thanh toán: "+order.getString("paymentMethod")+"\n"+
-                            "Ngày tạo: "+order.getString("createAt"))
-                    ordersId.add(order.getString("_id"))
-                }
-            }
-            val adapter = context?.let {
-                ArrayAdapter(
-                    it,
-                    R.layout.list_order, array)
-            }
-            val listView:ListView= view.findViewById(R.id.orders)
-            listView.adapter=adapter;
-
-
-            listView.onItemClickListener = object : AdapterView.OnItemClickListener {
-
-                override fun onItemClick(parent: AdapterView<*>, view: View,
-                                         position: Int, id: Long) {
-
-                    // value of item that is clicked
-                    val preferences= activity?.getSharedPreferences("admin_deskita", Context.MODE_PRIVATE)
-                    preferences?.edit()?.putString("order_id",ordersId.get(position))?.apply()
-                    findNavController().navigate(R.id.to_order_detail_fragment)
-                }
-            }
-                }catch (e:Exception){
-            Log.d("msg",e.stackTraceToString())
-        }
+    fun callGetMyOrder(){
+        var orders=client.getOrders();
+        val gson = GsonBuilder().create()
+        val myOrder = gson.fromJson(orders, MyOrder::class.java)
+        classifyOrdersByStatus(myOrder.orders)
 
     }
+
+    private fun classifyOrdersByStatus(orders: ArrayList<Order>) {
+        val lstProcessOrders: ArrayList<Order> = arrayListOf()
+        val lstConfirmedOrders: ArrayList<Order> = arrayListOf()
+        val lstDeliveredOrders: ArrayList<Order> = arrayListOf()
+        val lstCompletedOrders: ArrayList<Order> = arrayListOf()
+        for (order in orders){
+            for (item in order.orderItems){
+                item.total = item.price*item.quantity
+            }
+            if (order.orderStatus== OrderStatus.Processing){
+                lstProcessOrders.add(order)
+                continue
+            }else if (order.orderStatus==OrderStatus.Confirmed){
+                lstConfirmedOrders.add(order)
+                continue
+            }else if (order.orderStatus==OrderStatus.Delivered){
+                lstDeliveredOrders.add(order)
+                continue
+            }else if (order.orderStatus==OrderStatus.Complete){
+                lstCompletedOrders.add(order)
+                continue
+            }
+        }
+        setTabPager(lstProcessOrders,lstConfirmedOrders,lstDeliveredOrders,lstCompletedOrders)
+    }
+
+    fun setTabPager(lstProcessOrders: ArrayList<Order>,
+                    lstConfirmedOrders: ArrayList<Order>,
+                    lstDeliveredOrders: ArrayList<Order>,
+                    lstCompletedOrders: ArrayList<Order>,){
+        val adapter = OrderStatusPagerAdapter(parentFragmentManager)
+
+        completedFrag =CompletedFragment(lstCompletedOrders)
+        deliveredFragment = DeliveredFragment(lstDeliveredOrders)
+        confirmedFragment = ConfirmedFragment(lstConfirmedOrders,deliveredFragment)
+        processingFragment = ProcessingFragment(lstProcessOrders,confirmedFragment)
+        adapter.addFragment(processingFragment)
+        adapter.addFragment(confirmedFragment)
+        adapter.addFragment(deliveredFragment)
+        adapter.addFragment(completedFrag)
+        vpOrderStatus.adapter = adapter
+        tabOrderStatus.setupWithViewPager(vpOrderStatus)
+
+        tabOrderStatus.getTabAt(0)!!.setText("Chờ xử lý")
+        tabOrderStatus.getTabAt(1)!!.setText("Xác nhận")
+        tabOrderStatus.getTabAt(2)!!.setText("Đang giao")
+        tabOrderStatus.getTabAt(3)!!.setText("Đã nhận")
+    }
+
     companion object {
         /**
          * Use this factory method to create a new instance of

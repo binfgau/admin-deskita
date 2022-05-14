@@ -5,6 +5,8 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.os.StrictMode
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -50,6 +52,7 @@ class ProductFragment : Fragment() {
     private val binding get() = _binding!!
     val ACT_UPDATE = 1
     val ACT_ADD = 2
+    lateinit var lstProduct: ArrayList<Product>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -79,27 +82,54 @@ class ProductFragment : Fragment() {
             try {
                 val clickProduct = adapterView.getItemAtPosition(i) as Product
                 val id = clickProduct._id
-
-                val intent = Intent(requireContext(),AddUpdateProductAct::class.java)
-                intent.putExtra("product",clickProduct)
-                startActivityForResult(intent,ACT_UPDATE)
+                editSearch.setText("")
+                val intent = Intent(requireContext(), AddUpdateProductAct::class.java)
+                intent.putExtra("product", clickProduct)
+                startActivityForResult(intent, ACT_UPDATE)
             } catch (e: Exception) {
                 print(e.stackTraceToString())
                 Log.d("testcoi", e.stackTraceToString())
             }
         }
 
-        binding.imgAddProduct.setOnClickListener{
-            val intent = Intent(requireContext(),AddUpdateProductAct::class.java)
-            startActivityForResult(intent,ACT_ADD)
+        binding.imgAddProduct.setOnClickListener {
+            editSearch.setText("")
+            val intent = Intent(requireContext(), AddUpdateProductAct::class.java)
+            startActivityForResult(intent, ACT_ADD)
         }
+
+        editSearch.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                return
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                val lstSearchProduct :ArrayList<Product> = ArrayList()
+                for (item in lstProduct){
+                    if (item.name.contains(p0.toString(),true)){
+                        lstSearchProduct.add(item)
+                    }
+                }
+                lvProducts.adapter = ProductsAdapter(requireContext(),lstSearchProduct)
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+                return
+            }
+        })
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode==Activity.RESULT_OK && requestCode==ACT_UPDATE){
+        if (resultCode == Activity.RESULT_OK && requestCode == ACT_UPDATE) {
             var product = data?.getSerializableExtra("productUpdate") as Product
             (lvProducts.adapter as ProductsAdapter).updateProduct(product)
+            this.lstProduct = ArrayList((lvProducts.adapter as ProductsAdapter).lstProduct)
+        }
+        if (resultCode == Activity.RESULT_OK && requestCode == ACT_ADD) {
+            var product = data?.getSerializableExtra("productNew") as Product
+            lstProduct.add(product)
+            lvProducts.adapter = ProductsAdapter(requireContext(),lstProduct)
         }
     }
 
@@ -114,7 +144,8 @@ class ProductFragment : Fragment() {
             val response = client.newCall(request).execute()
             val jsonData = response.body()?.string();
             val container = Gson().fromJson(jsonData, ListProductContainer::class.java)
-            binding.lvProducts.adapter = ProductsAdapter(requireContext(),container.products)
+            lstProduct = container.products
+            binding.lvProducts.adapter = ProductsAdapter(requireContext(), container.products)
         } catch (e: Exception) {
             //code that handles exception
             Log.d("testcoi", e.stackTraceToString())

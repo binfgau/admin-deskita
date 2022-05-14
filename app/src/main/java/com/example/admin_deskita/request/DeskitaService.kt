@@ -16,7 +16,7 @@ class DeskitaService : Fragment() {
     val url="https://deskita-ecommerce.herokuapp.com/api/v1"
 
 
-    fun getOrders(): JSONArray {
+    fun getOrders(): String {
         val request = Request.Builder()
             .header("User-Agent", "OkHttp Headers.java")
             .addHeader("Accept", "application/json")
@@ -25,9 +25,7 @@ class DeskitaService : Fragment() {
             .build()
         val response = client.newCall(request).execute()
         val jsonData = response.body()?.string();
-        val json: JSONObject = JSONObject(jsonData)
-        return json.getJSONArray("orders")
-
+        return jsonData!!
     }
 
     fun getOrderById(id:String,token:String):JSONObject{

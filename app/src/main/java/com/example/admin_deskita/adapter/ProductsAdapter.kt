@@ -67,4 +67,9 @@ class ProductsAdapter(val context:Context,var lstProduct: ArrayList<Product>) :B
         }
         notifyDataSetChanged()
     }
+
+    fun addNewProduct(newProduct: Product){
+        lstProduct.add(newProduct)
+        notifyDataSetChanged()
+    }
 }

@@ -1,6 +1,7 @@
 package com.example.admin_deskita
 
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
@@ -16,10 +17,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.DatePicker
-import android.widget.ImageView
-import android.widget.TextView
+import android.widget.*
 import androidx.core.graphics.drawable.toBitmap
 import com.example.admin_deskita.databinding.FragmentProductBinding
 import com.example.admin_deskita.databinding.FragmentProfileBinding
@@ -149,6 +147,15 @@ class ProfileFragment : Fragment() {
             phone.toString(),
             place.toString()
         )
+        if (resJson.has("success")){
+            AlertDialog.Builder(requireContext())
+                .setTitle("Thay đổi thông tin cá nhân")
+                .setMessage("Cập nhật thành công")
+                .setPositiveButton("OK",null)
+                .show()
+        }else{
+            Toast.makeText(requireContext(),"Failure!",Toast.LENGTH_SHORT).show()
+        }
     }
 
     fun selectImage() {

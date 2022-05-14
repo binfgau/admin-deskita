@@ -28,6 +28,8 @@
                 android:hint="Search product..."
                 android:drawableLeft="@drawable/ic_search_24"
                 android:drawablePadding="5dp"
+                android:imeOptions="actionDone"
+                android:singleLine="true"
                 />
         </LinearLayout>
         <ImageView
