@@ -1,17 +1,28 @@
 package com.example.admin_deskita.adapter
 
 import android.content.Context
-import android.graphics.BitmapFactory
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
-import android.widget.ImageView
 import android.widget.TextView
 import com.example.admin_deskita.R
 import com.example.admin_deskita.entity.Customer
+import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
-import java.net.URL
+
+class CustomerViewHolder(val view:View){
+    var imgCustomerAvatar : CircleImageView
+    var txtFullname : TextView
+    var txtEmail : TextView
+    var txtPhoneNumber : TextView
+    init {
+        imgCustomerAvatar = view.findViewById(R.id.imgCustomerAvatar)
+        txtFullname = view.findViewById(R.id.txtFullName)
+        txtEmail = view.findViewById(R.id.txtEmail)
+        txtPhoneNumber = view.findViewById(R.id.txtPhoneNumber)
+    }
+}
 
 class CustomersAdapter(private val context: Context,
                        private val idLayout: Int,
@@ -32,27 +43,23 @@ class CustomersAdapter(private val context: Context,
     }
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-        var convertView = convertView
+        var view:View
+        var viewHolder:CustomerViewHolder
         if (convertView == null) {
-            convertView = LayoutInflater.from(parent.context).inflate(idLayout, parent, false)
+            view = LayoutInflater.from(context).inflate(idLayout, parent, false)
+            viewHolder = CustomerViewHolder(view)
+            view.tag = viewHolder
+        }else{
+            view = convertView
+            viewHolder = view.tag as CustomerViewHolder
         }
         val customer= listCustomer?.get(position)
 
-        val imageUrl = URL(customer!!.image)
-        val image= convertView?.findViewById(R.id.customer_user_image) as CircleImageView
-        val bitmap = BitmapFactory.decodeStream(imageUrl.openConnection().getInputStream())
-        image.setImageBitmap(bitmap)
-        image.requestLayout();
-        image.layoutParams.width=400;
-        image.layoutParams.height=400;
+        Picasso.get().load(customer?.image).placeholder(R.drawable.user_avatar).into(viewHolder.imgCustomerAvatar)
+        viewHolder.txtFullname.text = customer?.name
+        viewHolder.txtEmail.text = customer?.email
+        viewHolder.txtPhoneNumber.text = customer?.phoneNum
 
-        val name=convertView.findViewById(R.id.customer_user_info) as TextView
-        name.setText("Tên khách hàng: "+customer.name+"\n"
-        +"Email: "+customer.email+"\n"
-        +"Số điện thoại: "+customer.phoneNum)
-
-
-
-        return convertView
+        return view
     }
 }
