@@ -11,23 +11,6 @@
         android:label="@string/order_fragment_label"
         tools:layout="@layout/fragment_order"/>
 
-   <fragment
-        android:id="@+id/itCustomers"
-        android:name="com.example.admin_deskita.CustomerFragment"
-        android:label=""
-        tools:layout="@layout/fragment_customer">
-        <action
-            android:id="@+id/to_customer_detail_fragment"
-            app:destination="@id/CustomerDetailFragment"
-            />
-    </fragment>
-    <fragment
-        android:id="@+id/CustomerDetailFragment"
-        android:name="com.example.admin_deskita.CustomerDetailFragment"
-        android:label=""
-        tools:layout="@layout/fragment_customer_detail">
-
-    </fragment>
 
     <fragment
         android:id="@+id/itProducts"
@@ -45,19 +28,23 @@
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" />
     <fragment
-        android:id="@+id/customerFragment"
+        android:id="@+id/itCustomers"
         android:name="com.example.admin_deskita.CustomerFragment"
         android:label="fragment_customer"
         tools:layout="@layout/fragment_customer" >
         <action
-            android:id="@+id/action_customerFragment_to_customerDetailFragment"
+            android:id="@+id/to_customerDetailFragment"
             app:destination="@id/customerDetailFragment" />
     </fragment>
     <fragment
         android:id="@+id/customerDetailFragment"
         android:name="com.example.admin_deskita.CustomerDetailFragment"
         android:label="fragment_customer_detail"
-        tools:layout="@layout/fragment_customer_detail" />
+        tools:layout="@layout/fragment_customer_detail" >
+        <action
+            android:id="@+id/action_back_customerFragment"
+            app:destination="@id/itCustomers" />
+    </fragment>
 
     <fragment
         android:id="@+id/itDiscount"

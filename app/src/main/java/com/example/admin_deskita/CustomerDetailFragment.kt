@@ -12,7 +12,11 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.navigation.fragment.findNavController
 import com.example.admin_deskita.request.DeskitaService
+import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.fragment_customer_detail.*
+import kotlinx.android.synthetic.main.list_customer.*
 import org.json.JSONObject
 import java.net.URL
 
@@ -59,39 +63,34 @@ class CustomerDetailFragment : Fragment() {
         customer= customerId?.let { client.getUserById(it,token) }!!
         customer=customer.getJSONObject("user")
         //set image
-        val imageUrl = URL(customer.getJSONObject("avatar").getString("url"))
-        val image= view.findViewById(R.id.customer_cus_avatar) as ImageView
-        val bitmap = BitmapFactory.decodeStream(imageUrl.openConnection().getInputStream())
-        image.setImageBitmap(bitmap)
-        image.requestLayout();
-        image.layoutParams.width=400;
-        image.layoutParams.height=400;
+        val imageUrl = customer.getJSONObject("avatar").getString("url")
+        Picasso.get().load(imageUrl).placeholder(R.drawable.user_avatar).into(imgAvatar)
 
         //set fullname
-        val fullName=view.findViewById(R.id.customer_cus_full_name) as TextView
-        fullName.text="Họ và tên: "+customer.getString("name")
+        val fullName=view.findViewById(R.id.txtFullName) as TextView
+        fullName.text=customer.getString("name")
 
         //set phoneNumber
-        val phoneNumber=view.findViewById(R.id.customer_cus_phone) as TextView
-        phoneNumber.text="Số điện thoại: "+customer.getString("phoneNumber")
+        val phoneNumber=view.findViewById(R.id.txtPhoneNumber) as TextView
+        phoneNumber.text=customer.getString("phoneNumber")
 
         //set place
-        val place=view.findViewById(R.id.customer_cus_place) as TextView
-        place.text="Nơi sinh: "+customer.getString("placeOfBirth")
+        val place=view.findViewById(R.id.txtPlaceOfBirth) as TextView
+        place.text=customer.getString("placeOfBirth")
 
         //set date of birth
-        val date=view.findViewById(R.id.customer_cus_date) as TextView
-        date.text="Ngày sinh: "+customer.getString("dateOfBirth")
+        val date=view.findViewById(R.id.txtDateOfBirth) as TextView
+        date.text=customer.getString("dateOfBirth")
 
         //set email
-        val email=view.findViewById(R.id.customer_cus_email) as TextView
-        email.text="Email: "+customer.getString("emailUser")
+        val email=view.findViewById(R.id.txtEmail) as TextView
+        email.text=customer.getString("emailUser")
 
         //set create at
-        val createAt=view.findViewById(R.id.customer_cus_create_date) as TextView
-        createAt.text="Ngày tạo: "+customer.getString("createAt")
+        val createAt=view.findViewById(R.id.txtCreateAt) as TextView
+        createAt.text=customer.getString("createAt")
 
-        val btnUpdateRole=view.findViewById(R.id.btn_change_role) as Button
+        val btnUpdateRole=view.findViewById(R.id.bttChangeRole) as Button
         btnUpdateRole.setOnClickListener{
             try {
                 client.updateRole(customerId,token)
@@ -99,6 +98,10 @@ class CustomerDetailFragment : Fragment() {
             }catch (e:Exception){
                 Log.d("errorr",e.printStackTrace().toString())
             }
+        }
+
+        bttBack.setOnClickListener{
+            findNavController().navigate(R.id.action_back_customerFragment)
         }
     }
 
